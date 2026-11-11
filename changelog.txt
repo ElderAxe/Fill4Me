@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.3
+Date: Nov 11, 2026
+  Bugfixes:
+    - Fuels are found again on Factorio 2.1.20 and later. Items now list their fuel categories in `fuel_categories`; the removed single `fuel_category` was read in fill4me/fuel.lua, so no item counted as fuel.
+---------------------------------------------------------------------------------------------------
 Version: 1.0.2
 Date: Jun 29, 2026
   Bugfixes:
