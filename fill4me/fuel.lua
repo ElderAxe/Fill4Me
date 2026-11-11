@@ -36,12 +36,15 @@ Fuel = {}
 -- Fuel functions (the ones you probably want to call)
 -- 
 
+-- Factorio 2.1: items have `fuel_categories` (a list, absent when empty)
+-- instead of the single `fuel_category`.
+
 function Fuel.categories()
 	local cathash = {}
 	local catlist = {}
 	for name, proto in pairs(prototypes.item) do
-		if proto.fuel_category then
-			cathash[proto.fuel_category] = true
+		for _, category in pairs(proto.fuel_categories or {}) do
+			cathash[category] = true
 		end
 	end
 	for name, t in pairs(cathash) do
@@ -53,14 +56,14 @@ end
 function Fuel.list()
 	local fuellist = {}
 	for name, proto in pairs(prototypes.item) do
-		if proto.fuel_category then
+		for _, category in pairs(proto.fuel_categories or {}) do
 			for _, qproto in pairs(prototypes.quality) do
 				local multiplier = qproto.level * 0.3
 				table.insert(fuellist, {
 					name = proto.name,
 					quality = qproto.name,
 					quality_level = qproto.level,
-					category = proto.fuel_category,
+					category = category,
 					i18n = proto.localised_name,
 					quality_i18n = qproto.localised_name,
 					max_size = math.ceil(proto.stack_size / 2),
