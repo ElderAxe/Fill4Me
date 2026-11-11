@@ -39,11 +39,20 @@ Fuel = {}
 -- Factorio 2.1: items have `fuel_categories` (a list, absent when empty)
 -- instead of the single `fuel_category`.
 
+-- Placeable items (wooden chests, poles, platforms from mods that make them
+-- burn) are not meant as fuel, so they are never filled automatically.
+local function fuel_categories_of(proto)
+	if proto.place_result or proto.place_as_tile_result then
+		return {}
+	end
+	return proto.fuel_categories or {}
+end
+
 function Fuel.categories()
 	local cathash = {}
 	local catlist = {}
 	for name, proto in pairs(prototypes.item) do
-		for _, category in pairs(proto.fuel_categories or {}) do
+		for _, category in pairs(fuel_categories_of(proto)) do
 			cathash[category] = true
 		end
 	end
@@ -56,7 +65,7 @@ end
 function Fuel.list()
 	local fuellist = {}
 	for name, proto in pairs(prototypes.item) do
-		for _, category in pairs(proto.fuel_categories or {}) do
+		for _, category in pairs(fuel_categories_of(proto)) do
 			for _, qproto in pairs(prototypes.quality) do
 				local multiplier = qproto.level * 0.3
 				table.insert(fuellist, {

@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.4
+Date: Nov 11, 2026
+  Changes:
+    - Placeable items (chests, poles, tiles, ...) are no longer filled into entities as fuel, even when a mod gives them a fuel value. They can still be inserted by hand.
+---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Date: Nov 11, 2026
   Bugfixes:
